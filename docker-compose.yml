@@ -1,0 +1,19 @@
+version: "3.1"
+services:
+    apache:
+        image: 'php:8.1.4-apache'
+        container_name: beadventurer-api
+        restart: always
+        build:
+            context: ./.devops/php
+            dockerfile: Dockerfile
+        ports:
+            - '9003:80'
+        volumes:
+            - .:/var/www/html/
+            - ./.devops/apache/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
+        networks:
+          - beadventurer-network
+networks:
+    beadventurer-network:
+        driver: bridge
